@@ -1,9 +1,16 @@
 {
   "name": "expresszz",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "service.js",
   "author": "Adele Bendayan",
   "license": "MIT",
+  "scripts": {
+    "example:simple": "nodemon examples/example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abendayan/expresszz.git"
+  },
   "dependencies": {
     "body-parser": "1.19.1",
     "connect-redis": "6.1.0",
@@ -12,7 +19,11 @@
     "express-session": "1.17.2",
     "express-winston": "4.2.0",
     "http-proxy-middleware": "2.0.2",
+    "network": "^0.6.1",
     "redis": "4.0.3",
     "winston": "3.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.15"
   }
 }

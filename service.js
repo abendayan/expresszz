@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const expressWinston = require('express-winston')
 const { createProxyMiddleware } = require('http-proxy-middleware')
+const network = require('network')
 
 class Expresszz {
   constructor(name, port, redisUrl, secret, params = {}) {
@@ -22,9 +23,8 @@ class Expresszz {
     if (!secret) {
       throw new Error('The redis secret is required')
     }
-    const { apiPrefix, host } = params
+    const { apiPrefix } = params
     this.apiPrefix = apiPrefix
-    this.host = host || '127.0.0.1'
     this.redis_secret = secret
     this.middlewareSession = this.middlewareSession.bind(this)
     this.redis_url = redisUrl
@@ -41,6 +41,15 @@ class Expresszz {
     this.logger = winston.createLogger(this.logConfiguration)
     this.app = express()
     this.connections = {}
+    const self = this
+    network.get_public_ip(function(err, ip) {
+      if (err) {
+        self.logger.error('Could not retrieve the ip', { err })
+        throw err
+      }
+      self.logger.info('Ip found', { ip })
+      self.host = ip
+    })
   }
 
   async subscribeService() {
@@ -145,16 +154,17 @@ class Expresszz {
 
   configRoute(type, url, callbacks, params = {}) {
     const { session } = params
+    const urlWithPrefix = `${this.apiPrefix}/${url}`
     const defineCallbacks = session ? [this.middlewareSession, ...callbacks] : callbacks
     switch (type) {
       case 'post':
-        this.app.post(url, defineCallbacks)
+        this.app.post(urlWithPrefix, defineCallbacks)
         break
       case 'get':
-        this.app.get(url, defineCallbacks)
+        this.app.get(urlWithPrefix, defineCallbacks)
         break
       case 'put':
-        this.app.put(url, defineCallbacks)
+        this.app.put(urlWithPrefix, defineCallbacks)
         break
     }
   }
