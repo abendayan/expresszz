@@ -22,6 +22,7 @@ class Expresszz {
       throw new Error('The redis secret is required')
     }
     this.redis_secret = secret
+    this.middlewareSession = this.middlewareSession.bind(this)
     this.redis_url = redisUrl
     this.service_name = name
     this.defaultPort = port
@@ -39,15 +40,16 @@ class Expresszz {
   }
 
   buildRedisClient() {
+    const logger = this.logger
     const client = redis.createClient({
       url: this.redis_url,
       legacyMode: true
     })
     client.on('connect', function() {
-      this.logger.info('Redis Connected!')
+      logger.info('Redis Connected!')
     })
     client.on('error', function(error) {
-      this.logger.error('error', error)
+      logger.error('error', error)
     })
     return client
   }
