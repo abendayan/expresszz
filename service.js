@@ -6,9 +6,10 @@ const winston = require('winston')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const expressWinston = require('express-winston')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 
 class Expresszz {
-  constructor(name, port, redisUrl, secret) {
+  constructor(name, port, redisUrl, secret, params = {}) {
     if (!name) {
       throw new Error('The name of the service is required')
     }
@@ -21,6 +22,9 @@ class Expresszz {
     if (!secret) {
       throw new Error('The redis secret is required')
     }
+    const { apiPrefix, host } = params
+    this.apiPrefix = apiPrefix
+    this.host = host || '127.0.0.1'
     this.redis_secret = secret
     this.middlewareSession = this.middlewareSession.bind(this)
     this.redis_url = redisUrl
@@ -37,6 +41,23 @@ class Expresszz {
     this.logger = winston.createLogger(this.logConfiguration)
     this.app = express()
     this.connections = {}
+  }
+
+  async subscribeService() {
+    const client = this.getConnection('service')
+    await client.connect()
+    const data = {
+      prefix: this.apiPrefix,
+      port: this.defaultPort,
+      host: this.host
+    }
+    const logger = this.logger
+    client.set(`service-${this.service_name}`, JSON.stringify(data), (err) => {
+      if (err) {
+        logger.error('Service not properly subscribed', { err })
+        throw err;
+      }
+    })
   }
 
   buildRedisClient() {
@@ -84,6 +105,28 @@ class Expresszz {
     this.app.use(session(options))
     this.app.use(cookieParser())
     this.app.use(expressWinston.logger(this.logConfiguration))
+    await this.subscribeService()
+  }
+
+  async getServiceMap() {
+    const client = this.getConnection('service')
+    const logger = this.logger
+    let cursor = '0'
+    const found = []
+    do {
+      const reply = await client.scan(cursor, 'MATCH', 'service-*')
+      logger.info('Service found', { reply })
+      cursor = reply[0]
+      found.push(...reply[1])
+    } while (cursor !== '0')
+    return found
+  }
+
+  async buildProxies() {
+    const services = await this.getServiceMap()
+    services.forEach(({ prefix, port, host }) => {
+      this.app.use(createProxyMiddleware(prefix, { target: `${host}:${port}`, changeOrigin: true }))
+    })
   }
 
   middlewareSession (req, res, next) {
