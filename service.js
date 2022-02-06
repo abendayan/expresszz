@@ -64,7 +64,7 @@ class Expresszz {
     client.set(`service-${this.service_name}`, JSON.stringify(data), (err) => {
       if (err) {
         logger.error('Service not properly subscribed', { err })
-        throw err;
+        throw err
       }
     })
   }
@@ -157,15 +157,15 @@ class Expresszz {
     const urlWithPrefix = `${this.apiPrefix}/${url}`
     const defineCallbacks = session ? [this.middlewareSession, ...callbacks] : callbacks
     switch (type) {
-      case 'post':
-        this.app.post(urlWithPrefix, defineCallbacks)
-        break
-      case 'get':
-        this.app.get(urlWithPrefix, defineCallbacks)
-        break
-      case 'put':
-        this.app.put(urlWithPrefix, defineCallbacks)
-        break
+    case 'post':
+      this.app.post(urlWithPrefix, defineCallbacks)
+      break
+    case 'get':
+      this.app.get(urlWithPrefix, defineCallbacks)
+      break
+    case 'put':
+      this.app.put(urlWithPrefix, defineCallbacks)
+      break
     }
   }
 

@@ -1,5 +1,5 @@
-# Utils for microservices
-Collection of stuff to help quickly build a express server with redis session
+# ExpressZZ
+Utils to help to quickly build an express server
 
 ### Usage
 ```js
@@ -10,5 +10,5 @@ async function run() {
     service.configRoute('get', '/url', [() => service.logger.info('test')])
     service.run()
 }
-run ()
+run()
 ```
