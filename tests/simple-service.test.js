@@ -35,7 +35,9 @@ describe('Simple service', () => {
   beforeAll(async () => {
     service = new Expresszz('test-service', 5151,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
     await service.configureApp()
-    service.configRoute('get', 'echo', [() => 'test'])
+    service.configRoute('get', 'echo', [(req, res) => {
+      return res.status(200).send('this is a test')
+    }])
     await service.run()
   })
 
@@ -45,6 +47,16 @@ describe('Simple service', () => {
       .expect(404)
       .end((err, res) => {
         expect(res.body).toEqual({})
+        done()
+      })
+  })
+
+  test('On defined route',  (done) => {
+    request(service.app)
+      .get('/test/echo')
+      .expect(201)
+      .end((err, res) => {
+        expect(res.text).toEqual('this is a test')
         done()
       })
   })
