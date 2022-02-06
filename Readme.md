@@ -2,6 +2,7 @@
 Utils to help to quickly build an express server
 
 ### Usage
+Examples are in the examples folder
 ```js
 const { Expresszz } = require('expresszz')
 async function run() {
