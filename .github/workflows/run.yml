@@ -9,8 +9,7 @@ jobs:
         run: yarn
       - name: Run tests
         run: yarn test
-      - name: Jest Code Coverage Report
-        uses: ziishaned/jest-reporter-action@0.1.1
+      - name: Jest coverage report
+        uses: ArtiomTr/jest-coverage-report-action@v2.0.3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-command: 'yarn test:ci'
+          package-manager: yarn
