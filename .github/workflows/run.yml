@@ -9,5 +9,3 @@ jobs:
         run: yarn
       - name: Run tests
         run: yarn test:ci
-      - name: Jest badges generation action
-        uses: jpb06/jest-badges-action@v1.8.7
