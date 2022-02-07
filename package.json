@@ -7,8 +7,9 @@
   "scripts": {
     "example:simple": "nodemon examples/example.js",
     "lint": "eslint",
-    "test": "jest --ci --forceExit",
-    "test:ci": "jest --ci --coverage --forceExit"
+    "test": "jest --ci",
+    "test:dev": "jest --watch",
+    "test:ci": "jest --ci --coverage"
   },
   "repository": {
     "type": "git",
