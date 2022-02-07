@@ -69,6 +69,23 @@ class Expresszz {
     })
   }
 
+  async unsuscribeService() {
+    const client = this.getConnection('service')
+    await client.connect()
+    const data = {
+      prefix: this.apiPrefix,
+      port: this.defaultPort,
+      host: this.host
+    }
+    const logger = this.logger
+    client.del(`service-${this.service_name}`, JSON.stringify(data), (err) => {
+      if (err) {
+        logger.error('Service not properly unsubscribed', { err })
+        throw err
+      }
+    })
+  }
+
   buildRedisClient() {
     const logger = this.logger
     const client = redis.createClient({
@@ -171,8 +188,14 @@ class Expresszz {
 
   async run() {
     const port = this.defaultPort
-    this.app.listen(port, () => {
+    this.server = this.app.listen(port, () => {
       this.logger.info(`Up and running on port ${port} ! This is our ${this.service_name} service`)
+    })
+  }
+
+  async stop() {
+    this.server.close(async () => {
+      await this.unsuscribeService()
     })
   }
 }

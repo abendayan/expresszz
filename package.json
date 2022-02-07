@@ -7,8 +7,9 @@
   "scripts": {
     "example:simple": "nodemon examples/example.js",
     "lint": "eslint",
-    "test": "jest --ci --forceExit",
-    "test:ci": "jest --ci --coverage --forceExit"
+    "test": "jest --ci",
+    "test:dev": "jest --watch",
+    "test:ci": "jest --ci --coverage"
   },
   "repository": {
     "type": "git",
@@ -24,11 +25,17 @@
     "testEnvironment": "node",
     "coverageReporters": ["json-summary"],
     "coveragePathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/examples/",
+      "/tests/"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "service.js"
     ],
     "coverageThreshold": {
       "global": {
-        "lines": 80
+        "lines": 65
       }
     }
   },
