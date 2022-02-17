@@ -2,13 +2,12 @@ const express  = require('express')
 const redis = require('redis')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
-const winston = require('winston')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const expressWinston = require('express-winston')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const network = require('network')
 const rateLimit = require('express-rate-limit')
+const LoggerZZ = require('./logger')
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -17,7 +16,7 @@ const apiLimiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
 
-class Expresszz {
+class ExpressZZ {
   constructor(name, port, redisUrl, secret, params = {}) {
     if (!name) {
       throw new Error('The name of the service is required')
@@ -38,15 +37,8 @@ class Expresszz {
     this.redis_url = redisUrl
     this.service_name = name
     this.defaultPort = port
-    this.logConfiguration = {
-      level: 'info',
-      format: winston.format.combine(winston.format.json(), winston.format.colorize()),
-      defaultMeta: { service: `${this.service_name}-service` },
-      transports: [
-        new winston.transports.Console()
-      ],
-    }
-    this.logger = winston.createLogger(this.logConfiguration)
+    this.loggerZZ = new LoggerZZ(`${this.service_name}-service`)
+    this.logger = this.loggerZZ.logger
     this.app = express()
     this.connections = {}
     const self = this
@@ -138,7 +130,7 @@ class Expresszz {
     const options = await this.buildSessionOptions()
     this.app.use(session(options))
     this.app.use(cookieParser())
-    this.app.use(expressWinston.logger(this.logConfiguration))
+    this.loggerZZ.addToExpress(this.app)
     await this.subscribeService()
   }
 
@@ -198,18 +190,18 @@ class Expresszz {
     const callbacksWithLoggers = callbacks.map(callback => this.addLoggerToCallback(callback))
     const defineCallbacks = this.buildCallbacksWithApiLimiter((this.buildCallbackWithSession(callbacksWithLoggers, session)), limitApi)
     switch (type) {
-    case 'post':
-      this.app.post(urlWithPrefix, defineCallbacks)
-      break
-    case 'get':
-      this.app.get(urlWithPrefix, defineCallbacks)
-      break
-    case 'put':
-      this.app.put(urlWithPrefix, defineCallbacks)
-      break
-    case 'ws':
-      this.app.ws(url, defineCallbacks[0])
-      break
+      case 'post':
+        this.app.post(urlWithPrefix, defineCallbacks)
+        break
+      case 'get':
+        this.app.get(urlWithPrefix, defineCallbacks)
+        break
+      case 'put':
+        this.app.put(urlWithPrefix, defineCallbacks)
+        break
+      case 'ws':
+        this.app.ws(url, defineCallbacks[0])
+        break
     }
   }
 
@@ -227,6 +219,4 @@ class Expresszz {
   }
 }
 
-module.exports = {
-  Expresszz
-}
+module.exports = ExpressZZ

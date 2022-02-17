@@ -1,7 +1,7 @@
 {
   "name": "expresszz",
-  "version": "0.1.7",
-  "main": "service.js",
+  "version": "0.1.8",
+  "main": "main.js",
   "author": "Adele Bendayan",
   "license": "MIT",
   "scripts": {
@@ -42,6 +42,7 @@
     }
   },
   "dependencies": {
+    "amqplib": "0.8.0",
     "body-parser": "1.19.2",
     "connect-redis": "6.1.1",
     "cookie-parser": "1.4.6",
