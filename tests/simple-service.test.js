@@ -8,13 +8,13 @@ describe('Simple service', () => {
   beforeEach(async () => {
     service = new Expresszz('test-service', 5151,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
     await service.configureApp()
-    service.configRoute('get', 'echo', [(req, res) => {
+    service.configRoute('get', 'echo', [(logger, req, res) => {
       return res.status(200).send('this is a test')
     }])
-    service.configRoute('post', 'post', [(req, res) => {
+    service.configRoute('post', 'post', [(logger, req, res) => {
       return res.status(200).send('this is a post test')
     }])
-    service.configRoute('put', 'put', [(req, res) => {
+    service.configRoute('put', 'put', [(logger, req, res) => {
       return res.status(200).send('this is a put test')
     }])
     await service.run()

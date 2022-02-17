@@ -169,10 +169,18 @@ class Expresszz {
     })
   }
 
+  addLoggerToCallback(callback) {
+    const self = this
+    return function () {
+      callback(self.logger, ...arguments)
+    }
+  }
+
   configRoute(type, url, callbacks, params = {}) {
     const { session } = params
     const urlWithPrefix = `${this.apiPrefix}/${url}`
-    const defineCallbacks = session ? [this.middlewareSession, ...callbacks] : callbacks
+    const callbacksWithLoggers = callbacks.map(callback => this.addLoggerToCallback(callback))
+    const defineCallbacks = session ? [this.middlewareSession, ...callbacksWithLoggers] : callbacksWithLoggers
     switch (type) {
     case 'post':
       this.app.post(urlWithPrefix, defineCallbacks)

@@ -5,7 +5,7 @@
   "author": "Adele Bendayan",
   "license": "MIT",
   "scripts": {
-    "example:simple": "nodemon examples/example.js",
+    "example:simple": "nodemon examples/oneservice.js",
     "lint": "eslint",
     "test": "jest --ci",
     "test:dev": "jest --watch",

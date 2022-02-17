@@ -9,13 +9,13 @@ describe('Proxy test', () => {
   beforeEach(async () => {
     service = new Expresszz('test-service', 5152,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
     await service.configureApp()
-    service.configRoute('get', 'echo', [(req, res) => {
+    service.configRoute('get', 'echo', [(logger, req, res) => {
       return res.status(200).send('this is a test')
     }])
     await service.run()
     app = new Expresszz('test-app', 5150,  'redis://redis:6379', 'secret', { apiPrefix: '/second' })
     await app.configureApp()
-    app.configRoute('get', 'hello', [(req, res) => {
+    app.configRoute('get', 'hello', [(logger, req, res) => {
       return res.status(200).send('this is a test')
     }])
     await app.run()
