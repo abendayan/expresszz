@@ -1,4 +1,3 @@
-require('dotenv').config()
 const amqp = require('amqplib')
 const LoggerZZ = require('./loggerzz')
 

@@ -1,4 +1,4 @@
-const LoggerZZ = require('./logger')
+const LoggerZZ = require('./loggerzz')
 const ExpressZZ = require('./expresszz')
 const ProducerZZ = require('./producerzz')
 const ReceiverZZ = require('./receiverzz')

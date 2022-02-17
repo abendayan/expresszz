@@ -1,19 +1,19 @@
 const request = require('supertest')
 require('./mocks/mock-test')
 
-const { Expresszz } = require('../service')
+const { ExpressZZ } = require('../main')
 
 describe('Proxy test', () => {
   let service
   let app
   beforeEach(async () => {
-    service = new Expresszz('test-service', 5152,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
+    service = new ExpressZZ('test-service', 5152,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
     await service.configureApp()
     service.configRoute('get', 'echo', [(logger, req, res) => {
       return res.status(200).send('this is a test')
     }])
     await service.run()
-    app = new Expresszz('test-app', 5150,  'redis://redis:6379', 'secret', { apiPrefix: '/second' })
+    app = new ExpressZZ('test-app', 5150,  'redis://redis:6379', 'secret', { apiPrefix: '/second' })
     await app.configureApp()
     app.configRoute('get', 'hello', [(logger, req, res) => {
       return res.status(200).send('this is a test')

@@ -1,19 +1,20 @@
 const amqp = require('amqplib')
-const LoggerZZ = require('./logger')
+const LoggerZZ = require('./loggerzz')
 
 class ProducerZZ {
-  constructor(amqpUrl) {
+  constructor(amqpUrl, queue) {
     this.amqpUrl = amqpUrl
+    this.queue = queue
     const loggerZZ = new LoggerZZ(`queue-${queue}`)
     this.logger = loggerZZ.logger
   }
 
-  sendMessageToQueue = async (queue, data) => {
+  sendMessageToQueue = async (data) => {
     try {
       const connection = await amqp.connect(this.amqpUrl)
       const channel = await connection.createChannel()
-      await channel.assertQueue(queue, { durable: true })
-      await channel.sendToQueue(queue, Buffer.from(JSON.stringify(data)), { persistent: true })
+      await channel.assertQueue(this.queue, { durable: true })
+      await channel.sendToQueue(this.queue, Buffer.from(JSON.stringify(data)), { persistent: true })
       const self = this
       setTimeout(function () {
         channel.connection.close()

@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const network = require('network')
 const rateLimit = require('express-rate-limit')
-const LoggerZZ = require('./logger')
+const LoggerZZ = require('./loggerzz')
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
