@@ -191,6 +191,9 @@ class Expresszz {
     case 'put':
       this.app.put(urlWithPrefix, defineCallbacks)
       break
+    case 'ws':
+      this.app.ws(url, defineCallbacks[0])
+      break
     }
   }
 
