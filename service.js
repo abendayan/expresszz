@@ -8,6 +8,14 @@ const cookieParser = require('cookie-parser')
 const expressWinston = require('express-winston')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const network = require('network')
+const rateLimit = require('express-rate-limit')
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
 class Expresszz {
   constructor(name, port, redisUrl, secret, params = {}) {
@@ -176,11 +184,19 @@ class Expresszz {
     }
   }
 
+  buildCallbackWithSession(callbacks, withSession) {
+    return withSession ? [this.middlewareSession, ...callbacks] : callbacks
+  }
+
+  buildCallbacksWithApiLimiter(callbacks, withLimiter) {
+    return withLimiter ? [apiLimiter, ...callbacks] : callbacks
+  }
+
   configRoute(type, url, callbacks, params = {}) {
-    const { session } = params
+    const { session, limitApi } = params
     const urlWithPrefix = `${this.apiPrefix}/${url}`
     const callbacksWithLoggers = callbacks.map(callback => this.addLoggerToCallback(callback))
-    const defineCallbacks = session ? [this.middlewareSession, ...callbacksWithLoggers] : callbacksWithLoggers
+    const defineCallbacks = this.buildCallbacksWithApiLimiter((this.buildCallbackWithSession(callbacksWithLoggers, session)), limitApi)
     switch (type) {
     case 'post':
       this.app.post(urlWithPrefix, defineCallbacks)

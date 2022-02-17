@@ -1,6 +1,6 @@
 {
   "name": "expresszz",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "service.js",
   "author": "Adele Bendayan",
   "license": "MIT",
@@ -23,7 +23,9 @@
   ],
   "jest": {
     "testEnvironment": "node",
-    "coverageReporters": ["json-summary"],
+    "coverageReporters": [
+      "json-summary"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/examples/",
@@ -44,6 +46,7 @@
     "connect-redis": "6.1.1",
     "cookie-parser": "1.4.6",
     "express": "4.17.3",
+    "express-rate-limit": "6.2.1",
     "express-session": "1.17.2",
     "express-winston": "4.2.0",
     "http-proxy-middleware": "2.0.3",
