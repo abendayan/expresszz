@@ -45,7 +45,7 @@ class ReceiverZZ {
     const handle = responses()
     const self = this
     handle((rspAMQP) => {
-      this.handleMessage(self.logger, rspAMQP)
+      self.handleMessage(self.logger, rspAMQP, ...arguments)
     })
   }
 }
