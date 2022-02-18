@@ -39,13 +39,13 @@ class ReceiverZZ {
     }
   }
 
-  run = async () => {
+  run = async (params = []) => {
     this.logger.info('Start listening')
     const { responses } = await this.receive()
     const handle = responses()
     const self = this
     handle((rspAMQP) => {
-      self.handleMessage(self.logger, rspAMQP, ...arguments)
+      self.handleMessage(self.logger, rspAMQP, ...params)
     })
   }
 }
