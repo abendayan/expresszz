@@ -761,7 +761,7 @@ ajv@^6.10.0, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-amqplib@^0.8.0:
+amqplib@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/amqplib/-/amqplib-0.8.0.tgz#088d10bc61cc5ac5a49ac72033c7ac66c23aeb61"
   integrity sha512-icU+a4kkq4Y1PS4NNi+YPDMwdlbFcZ1EZTQT2nigW3fvOb6AOgUQ9+Mk4ue0Zu5cBg/XpDzB40oH10ysrk2dmA==
@@ -1691,10 +1691,10 @@ expect@^27.5.1:
     jest-matcher-utils "^27.5.1"
     jest-message-util "^27.5.1"
 
-express-rate-limit@6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-6.2.1.tgz#4a7619634fb24417ae723ad2ac3707b38e2e1c64"
-  integrity sha512-22ovnpEiKR5iAMXDOQ7A6aOvb078JLvoHGlyrrWBl3PeJ34coyakaviPelj4Nc8d+yDoVIWYmaUNP5aYT4ICDQ==
+express-rate-limit@6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-6.3.0.tgz#253387ce4d36c9c2cc77c7c676068deb36cc0821"
+  integrity sha512-932Io1VGKjM3ppi7xW9sb1J5nVkEJSUiOtHw2oE+JyHks1e+AXuOBSXbJKM0mcXwEnW1TibJibQ455Ow1YFjfg==
 
 express-session@1.17.2:
   version "1.17.2"
