@@ -1,8 +1,8 @@
 {
   "name": "expresszz",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "main.js",
-  "author": "Adele Bendayan",
+  "author": "Adele Bendayan <adele.bendayan@gmail.com>",
   "license": "MIT",
   "scripts": {
     "example:simple": "nodemon examples/oneservice.js",
@@ -20,6 +20,11 @@
     "express",
     "service",
     "redis"
+  ],
+  "files": [
+    "LICENSE",
+    "main.js",
+    "lib/"
   ],
   "jest": {
     "testEnvironment": "node",
@@ -47,10 +52,12 @@
     "connect-redis": "6.1.1",
     "cookie-parser": "1.4.6",
     "express": "4.17.3",
-    "express-rate-limit": "6.2.1",
+    "express-rate-limit": "6.3.0",
     "express-session": "1.17.2",
     "express-winston": "4.2.0",
+    "http": "0.0.1-security",
     "http-proxy-middleware": "2.0.3",
+    "https": "1.0.0",
     "network": "0.6.1",
     "redis": "4.0.3",
     "winston": "3.6.0"

@@ -1,12 +1,12 @@
 const request = require('supertest')
 require('./mocks/mock-test')
 
-const { Expresszz } = require('../service')
+const { ExpressZZ } = require('../main')
 
 describe('Simple service', () => {
   let service
   beforeEach(async () => {
-    service = new Expresszz('test-service', 5151,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
+    service = new ExpressZZ('test-service', 5151,  'redis://redis:6379', 'secret', { apiPrefix: '/test' })
     await service.configureApp()
     service.configRoute('get', 'echo', [(logger, req, res) => {
       return res.status(200).send('this is a test')

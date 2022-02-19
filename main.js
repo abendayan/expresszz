@@ -1,7 +1,7 @@
-const LoggerZZ = require('./loggerzz')
-const ExpressZZ = require('./expresszz')
-const ProducerZZ = require('./producerzz')
-const ReceiverZZ = require('./receiverzz')
+const LoggerZZ = require('./lib/loggerzz')
+const ExpressZZ = require('./lib/expresszz')
+const ProducerZZ = require('./lib/producerzz')
+const ReceiverZZ = require('./lib/receiverzz')
 
 module.exports = {
   ExpressZZ,
