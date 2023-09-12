@@ -1686,10 +1686,10 @@ expect@^27.5.1:
     jest-matcher-utils "^27.5.1"
     jest-message-util "^27.5.1"
 
-express-rate-limit@6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-6.3.0.tgz#253387ce4d36c9c2cc77c7c676068deb36cc0821"
-  integrity sha512-932Io1VGKjM3ppi7xW9sb1J5nVkEJSUiOtHw2oE+JyHks1e+AXuOBSXbJKM0mcXwEnW1TibJibQ455Ow1YFjfg==
+express-rate-limit@6.11.2:
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-6.11.2.tgz#6c42035603d3b52e4e2fb59f6ebaa89e628ef980"
+  integrity sha512-a7uwwfNTh1U60ssiIkuLFWHt4hAC5yxlLGU2VP0X4YNlyEDZAqF4tK3GD3NSitVBrCQmQ0++0uOyFOgC2y4DDw==
 
 express-session@1.17.2:
   version "1.17.2"
