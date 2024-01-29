@@ -53,7 +53,7 @@
     "cookie-parser": "1.4.6",
     "express": "4.17.3",
     "express-rate-limit": "6.3.0",
-    "express-session": "1.17.2",
+    "express-session": "1.18.0",
     "express-winston": "4.2.0",
     "http": "0.0.1-security",
     "http-proxy-middleware": "2.0.3",
